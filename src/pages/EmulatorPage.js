@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './EmulatorPage.css'; // Importando o arquivo CSS
 
 const Emulator = () => {
-  const [rom, setRom] = useState(null);  // Estado para armazenar a ROM carregada
+
   const [loading, setLoading] = useState(false);
   const [gameLoaded, setGameLoaded] = useState(false);
   const [backgroundGif, setBackgroundGif] = useState(''); // Estado para controlar o fundo
