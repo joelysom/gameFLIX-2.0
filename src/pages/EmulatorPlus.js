@@ -21,9 +21,7 @@ const EmulatorPlus = () => {
         setEnableThreads(true);
         console.log('Threads are enabled');
       } else {
-        console.warn(
-          'Threads are disabled as SharedArrayBuffer is not available. Threads requires two headers to be set when sending you html page. See https://stackoverflow.com/a/68630724'
-        );
+        console.warn('Threads are disabled as SharedArrayBuffer is not available.');
         console.log('Threads are disabled');
       }
     } else {
@@ -31,13 +29,51 @@ const EmulatorPlus = () => {
     }
   }, []);
 
+  const handleMouseEnter = (image) => {
+    let backgroundDiv = document.getElementById('background');
+  
+    if (!backgroundDiv) {
+      backgroundDiv = document.createElement('div');
+      backgroundDiv.id = 'background';
+      document.body.appendChild(backgroundDiv);
+    }
+  
+    backgroundDiv.style.position = 'fixed';
+    backgroundDiv.style.top = '0';
+    backgroundDiv.style.left = '0';
+    backgroundDiv.style.width = '100%';
+    backgroundDiv.style.height = '100%';
+    backgroundDiv.style.backgroundImage = `url(${image})`;
+    backgroundDiv.style.backgroundSize = 'cover';
+    backgroundDiv.style.backgroundPosition = 'center';
+    backgroundDiv.style.filter = 'blur(8px)';
+    backgroundDiv.style.zIndex = '-1';
+  };
+  
+  const handleMouseLeave = () => {
+    const backgroundDiv = document.getElementById('background');
+    if (backgroundDiv) {
+      backgroundDiv.remove();
+    }
+  };
+
   const handleFileChange = async (e) => {
     const input = e.target;
     const url = input.files[0];
     const parts = input.files[0].name.split('.');
-
     const core = await getCoreByExtension(parts.pop());
 
+    setupGameEnvironment(url, parts.shift(), core);
+  };
+
+  const handleAutoLoad = async (romUrl) => {
+    console.log(`Auto-loading ROM: ${romUrl}`);
+    const parts = romUrl.split('.');
+    const core = await getCoreByExtension(parts.pop());
+    setupGameEnvironment(romUrl, parts.shift(), core);
+  };
+
+  const setupGameEnvironment = (url, gameName, core) => {
     const div = document.createElement('div');
     const sub = document.createElement('div');
     const script = document.createElement('script');
@@ -45,15 +81,14 @@ const EmulatorPlus = () => {
     sub.id = 'game';
     div.id = 'display';
 
-    const top = document.getElementById('top');
-    top.remove();
-    document.getElementById('box').remove();
+    document.getElementById('top')?.remove();
+    document.getElementById('box')?.remove();
 
     div.appendChild(sub);
     document.body.appendChild(div);
 
     window.EJS_player = '#game';
-    window.EJS_gameName = parts.shift();
+    window.EJS_gameName = gameName;
     window.EJS_biosUrl = '';
     window.EJS_gameUrl = url;
     window.EJS_core = core;
@@ -67,110 +102,22 @@ const EmulatorPlus = () => {
     document.body.appendChild(script);
   };
 
-  
-
-  const handleAutoLoad = async (romUrl) => {
-    console.log(`Auto-loading ROM: ${romUrl}`);
-    
-    const parts = romUrl.split('.');
-    const core = await getCoreByExtension(parts.pop()); // Pegando o core baseado na extensão da ROM
-  
-    const div = document.createElement('div');
-    const sub = document.createElement('div');
-    const script = document.createElement('script');
-  
-    sub.id = 'game';
-    div.id = 'display';
-  
-    const top = document.getElementById('top');
-    top.remove();
-    document.getElementById('box').remove();
-  
-    div.appendChild(sub);
-    document.body.appendChild(div);
-  
-    window.EJS_player = '#game';
-    window.EJS_gameName = parts.shift();
-    window.EJS_biosUrl = '';
-    window.EJS_gameUrl = romUrl; // Passando a URL da ROM selecionada
-    window.EJS_core = core;
-    window.EJS_pathtodata = 'data/';
-    window.EJS_startOnLoaded = true;
-    window.EJS_DEBUG_XX = enableDebug;
-    window.EJS_disableDatabases = true;
-    window.EJS_threads = enableThreads;
-  
-    script.src = './data/loader.js';
-    document.body.appendChild(script);
-  };
-  
-
   const getCoreByExtension = async (ext) => {
     const coreMapping = {
-      fds: 'nes',
-      nes: 'nes',
-      unif: 'nes',
-      unf: 'nes',
-      smc: 'snes',
-      fig: 'snes',
-      sfc: 'snes',
-      gd3: 'snes',
-      gd7: 'snes',
-      dx2: 'snes',
-      bsx: 'snes',
-      swc: 'snes',
-      z64: 'n64',
-      n64: 'n64',
-      pce: 'pce',
-      ngp: 'ngp',
-      ngc: 'ngp',
-      ws: 'ws',
-      wsc: 'ws',
-      col: 'coleco',
-      cv: 'coleco',
-      d64: 'vice_x64sc',
-      gba: 'gba',
-      gb: 'gb',
-      nds: 'nds',
+      fds: 'nes', nes: 'nes', smc: 'snes', sfc: 'snes', z64: 'n64',
+      n64: 'n64', pce: 'pce', ngp: 'ngp', ws: 'ws', gba: 'gba',
+      gb: 'gb', nds: 'nds', col: 'coleco', d64: 'vice_x64sc'
     };
 
     if (coreMapping[ext]) return coreMapping[ext];
 
-    const coreValues = {
-      'Nintendo 64': 'n64',
-      'Nintendo Game Boy': 'gb',
-      'Nintendo Game Boy Advance': 'gba',
-      'Nintendo DS': 'nds',
-      'Nintendo Entertainment System': 'nes',
-      'Super Nintendo Entertainment System': 'snes',
-      'PlayStation': 'psx',
-      'Virtual Boy': 'vb',
-      'Sega Mega Drive': 'segaMD',
-      'Sega Master System': 'segaMS',
-      'Sega CD': 'segaCD',
-      'Atari Lynx': 'lynx',
-      'Sega 32X': 'sega32x',
-      'Atari Jaguar': 'jaguar',
-      'Sega Game Gear': 'segaGG',
-      'Sega Saturn': 'segaSaturn',
-      'Atari 7800': 'atari7800',
-      'Atari 2600': 'atari2600',
-      Arcade: 'arcade',
-      'NEC TurboGrafx-16/SuperGrafx/PC Engine': 'pce',
-      'NEC PC-FX': 'pcfx',
-      'SNK NeoGeo Pocket (Color)': 'ngp',
-      'Bandai WonderSwan (Color)': 'ws',
-      ColecoVision: 'coleco',
-      'Commodore 64': 'vice_x64sc',
-      'Commodore 128': 'vice_x128',
-      'Commodore VIC20': 'vice_xvic',
-      'Commodore Plus/4': 'vice_xplus4',
-      'Commodore PET': 'vice_xpet',
-    };
-
-    return await new Promise((resolve) => {
+    return new Promise((resolve) => {
       const button = document.createElement('button');
       const select = document.createElement('select');
+      const coreValues = {
+        'Nintendo 64': 'n64', 'Game Boy': 'gb', 'GBA': 'gba', 'NDS': 'nds',
+        'NES': 'nes', 'SNES': 'snes', 'PlayStation': 'psx', 'Sega Genesis': 'segaMD'
+      };
 
       Object.keys(coreValues).forEach((type) => {
         const option = document.createElement('option');
@@ -179,44 +126,16 @@ const EmulatorPlus = () => {
         select.appendChild(option);
       });
 
-      button.onclick = () => resolve(select[select.selectedIndex].value);
+      button.onclick = () => resolve(select.value);
       button.textContent = 'Load game';
-
       document.getElementById('box').innerHTML = '';
-      document.getElementById('box').appendChild(select);
-      document.getElementById('box').appendChild(button);
+      document.getElementById('box').append(select, button);
     });
   };
 
   const handleButtonClick = (romUrl) => {
     console.log(`Loading game from URL: ${romUrl}`);
-    handleAutoLoad(romUrl); // Chama a função de carregamento passando a URL correta
-  };
-  
-
-  const handleMouseEnter = (image) => {
-    // Cria o fundo com a GIF e aplica o blur
-    const backgroundDiv = document.createElement('div');
-    backgroundDiv.id = 'background';
-    backgroundDiv.style.position = 'fixed';
-    backgroundDiv.style.top = '0';
-    backgroundDiv.style.left = '0';
-    backgroundDiv.style.width = '100%';
-    backgroundDiv.style.height = '100%';
-    backgroundDiv.style.backgroundImage = `url(${image})`;
-    backgroundDiv.style.backgroundSize = 'cover';
-    backgroundDiv.style.backgroundPosition = 'center';
-    backgroundDiv.style.filter = 'blur(8px)'; // Aplica o blur leve
-    backgroundDiv.style.zIndex = '-1'; // Coloca o fundo atrás do conteúdo
-    document.body.appendChild(backgroundDiv);
-  };
-
-  const handleMouseLeave = () => {
-    // Remove o fundo com blur
-    const backgroundDiv = document.getElementById('background');
-    if (backgroundDiv) {
-      document.body.removeChild(backgroundDiv);
-    }
+    handleAutoLoad(romUrl);
   };
 
   return (
@@ -224,53 +143,31 @@ const EmulatorPlus = () => {
       <div id="top"></div>
       <div id="box">
         <div className="games-container">
-          {/* Card 1 */}
-          <div 
-            className="game-card" 
-            onClick={() => handleButtonClick('https://raw.githubusercontent.com/joelysom/git-test/main/assets/roms/firered.gba')}
-            onMouseEnter={() => handleMouseEnter('/firered.gif')}
-            onMouseLeave={handleMouseLeave}
-          >
-            <img src="/firered.jpeg" alt="Pokémon FireRed" className="game-image" />
-            <div className="game-title">Pokémon FireRed (GBA)</div>
-          </div>
-
-          {/* Card 2 */}
-          <div 
-            className="game-card" 
-            onClick={() => handleButtonClick('https://raw.githubusercontent.com/joelysom/git-test/main/assets/roms/finalfantasytacticsadvance.gba')}
-            onMouseEnter={() => handleMouseEnter('/finalfantasytacticsadvance.gif')}
-            onMouseLeave={handleMouseLeave}
-          >
-            <img src="/finalfantasytacticsadvance.jpeg" alt="Final Fantasy" className="game-image" />
-            <div className="game-title">Final Fantasy Tactics Advance (GBA)</div>
-          </div>
-
-          {/* Card 3 */}
-          <div 
-            className="game-card" 
-            onClick={() => handleButtonClick('https://raw.githubusercontent.com/joelysom/git-test/main/assets/roms/StreetFA2.gba')}
-            onMouseEnter={() => handleMouseEnter('/street.gif')}
-            onMouseLeave={handleMouseLeave}
-          >
-            <img src="/Streetfighter3.jpg" alt="Street Fighter Alpha 3" className="game-image" />
-            <div className="game-title">Street Fighter Alpha 3 (GBA)</div>
-
-            {/* Card 4 (Novo Card) */}
-          <div 
-            className="game-card" 
-            onClick={() => handleButtonClick('https://example.com/kirbynightmareindreamland.gba')}
-            onMouseEnter={() => handleMouseEnter('/kirbynightmareindreamland.gif')}
-            onMouseLeave={handleMouseLeave}
-          >
-            <img src="/kirbynightmareindreamland.jpeg" alt="Kirby Nightmare in dreamland" className="game-image" />
-            <div className="game-title">Kirby Nightmare in dreamland (GBA)</div>
-          </div>
-          </div>
+          {games.map((game, index) => (
+            <div
+              key={index}
+              className="game-card"
+              onClick={() => handleButtonClick(game.romUrl)}
+            >
+              <img src={game.image} alt={game.title} className="game-image" />
+              <div className="game-title">{game.title}</div>
+            </div>
+          ))}
         </div>
       </div>
     </div>
   );
 };
+
+
+
+const games = [
+  { title: 'Pokémon FireRed (GBA)', romUrl: './roms/firered.gba', image: '/firered.jpeg', gif: '/firered.gif' },
+  { title: 'Final Fantasy Tactics Advance (GBA)', romUrl: './roms/finalfantasytacticsadvance.gba', image: '/finalfantasytacticsadvance.jpeg' },
+  { title: 'Street Fighter Alpha 3 (GBA)', romUrl: './roms/StreetFA2.gba', image: '/Streetfighter3.jpg' },
+  { title: 'Kirby Nightmare in Dream Land (GBA)', romUrl: './roms/kirbynightmareindreamland.gba', image: '/kirbynightmareindreamland.jpeg' },
+  { title: 'Super Mario 64 (N64)', romUrl: './roms/mario64.n64', image: '/mario64.jpg' },
+  { title: 'Pokemon Black (NDS)', romUrl: './roms/pokemonblack.nds', image: '/pokemonblack.jpg' }
+];
 
 export default EmulatorPlus;

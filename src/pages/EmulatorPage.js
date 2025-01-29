@@ -123,7 +123,7 @@ const Emulator = () => {
           {/* Pokémon FireRed */}
           <div 
             className="game-card" 
-            onClick={() => handleButtonClick('https://raw.githubusercontent.com/joelysom/git-test/main/assets/roms/firered.gba')}
+            onClick={() => handleButtonClick('./roms/firered.gba')}
             onMouseEnter={() => handleMouseEnter('/firered.gif')}
             onMouseLeave={handleMouseLeave}
           >
