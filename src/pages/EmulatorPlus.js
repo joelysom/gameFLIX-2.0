@@ -249,12 +249,23 @@ const EmulatorPlus = () => {
           {/* Card 3 */}
           <div 
             className="game-card" 
-            onClick={() => handleButtonClick('https://example.com/game3.gba')}
-            onMouseEnter={() => handleMouseEnter('/game3.gif')}
+            onClick={() => handleButtonClick('https://raw.githubusercontent.com/joelysom/git-test/main/assets/roms/StreetFA2.gba')}
+            onMouseEnter={() => handleMouseEnter('/street.gif')}
             onMouseLeave={handleMouseLeave}
           >
-            <img src="/game3.jpeg" alt="Game 3" className="game-image" />
-            <div className="game-title">Game 3 (GBA)</div>
+            <img src="/Streetfighter3.jpg" alt="Street Fighter Alpha 3" className="game-image" />
+            <div className="game-title">Street Fighter Alpha 3 (GBA)</div>
+
+            {/* Card 4 (Novo Card) */}
+          <div 
+            className="game-card" 
+            onClick={() => handleButtonClick('https://example.com/kirbynightmareindreamland.gba')}
+            onMouseEnter={() => handleMouseEnter('/kirbynightmareindreamland.gif')}
+            onMouseLeave={handleMouseLeave}
+          >
+            <img src="/kirbynightmareindreamland.jpeg" alt="Kirby Nightmare in dreamland" className="game-image" />
+            <div className="game-title">Kirby Nightmare in dreamland (GBA)</div>
+          </div>
           </div>
         </div>
       </div>
