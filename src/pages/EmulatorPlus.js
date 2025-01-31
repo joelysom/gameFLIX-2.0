@@ -30,31 +30,17 @@ const EmulatorPlus = () => {
   }, []);
 
   const handleMouseEnter = (image) => {
-    let backgroundDiv = document.getElementById('background');
-  
-    if (!backgroundDiv) {
-      backgroundDiv = document.createElement('div');
-      backgroundDiv.id = 'background';
-      document.body.appendChild(backgroundDiv);
-    }
-  
-    backgroundDiv.style.position = 'fixed';
-    backgroundDiv.style.top = '0';
-    backgroundDiv.style.left = '0';
-    backgroundDiv.style.width = '100%';
-    backgroundDiv.style.height = '100%';
+    const backgroundDiv = document.getElementById('background');
     backgroundDiv.style.backgroundImage = `url(${image})`;
     backgroundDiv.style.backgroundSize = 'cover';
     backgroundDiv.style.backgroundPosition = 'center';
     backgroundDiv.style.filter = 'blur(8px)';
-    backgroundDiv.style.zIndex = '-1';
   };
-  
+
   const handleMouseLeave = () => {
     const backgroundDiv = document.getElementById('background');
-    if (backgroundDiv) {
-      backgroundDiv.remove();
-    }
+    backgroundDiv.style.backgroundImage = '';
+    backgroundDiv.style.filter = '';
   };
 
   const handleFileChange = async (e) => {
@@ -106,7 +92,7 @@ const EmulatorPlus = () => {
     const coreMapping = {
       fds: 'nes', nes: 'nes', smc: 'snes', sfc: 'snes', z64: 'n64',
       n64: 'n64', pce: 'pce', ngp: 'ngp', ws: 'ws', gba: 'gba',
-      gb: 'gb', nds: 'nds', col: 'coleco', d64: 'vice_x64sc'
+      gb: 'gb', nds: 'nds', col: 'coleco', d64: 'vice_x64sc', bin: 'psx'
     };
 
     if (coreMapping[ext]) return coreMapping[ext];
@@ -141,6 +127,7 @@ const EmulatorPlus = () => {
   return (
     <div>
       <div id="top"></div>
+      <div id="background" style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', zIndex: -1 }}></div>
       <div id="box">
         <div className="games-container">
           {games.map((game, index) => (
@@ -148,8 +135,14 @@ const EmulatorPlus = () => {
               key={index}
               className="game-card"
               onClick={() => handleButtonClick(game.romUrl)}
+              onMouseEnter={() => handleMouseEnter(game.gif || game.image)}
+              onMouseLeave={handleMouseLeave}
             >
-              <img src={game.image} alt={game.title} className="game-image" />
+              <img
+                src={game.image}
+                alt={game.title}
+                className="game-image"
+              />
               <div className="game-title">{game.title}</div>
             </div>
           ))}
@@ -159,15 +152,16 @@ const EmulatorPlus = () => {
   );
 };
 
-
-
 const games = [
   { title: 'Pokémon FireRed (GBA)', romUrl: './roms/firered.gba', image: '/firered.jpeg', gif: '/firered.gif' },
-  { title: 'Final Fantasy Tactics Advance (GBA)', romUrl: './roms/finalfantasytacticsadvance.gba', image: '/finalfantasytacticsadvance.jpeg' },
-  { title: 'Street Fighter Alpha 3 (GBA)', romUrl: './roms/StreetFA2.gba', image: '/Streetfighter3.jpg' },
-  { title: 'Kirby Nightmare in Dream Land (GBA)', romUrl: './roms/kirbynightmareindreamland.gba', image: '/kirbynightmareindreamland.jpeg' },
-  { title: 'Super Mario 64 (N64)', romUrl: './roms/mario64.n64', image: '/mario64.jpg' },
-  { title: 'Pokemon Black (NDS)', romUrl: './roms/pokemonblack.nds', image: '/pokemonblack.jpg' }
+  { title: 'Final Fantasy Tactics Advance (GBA)', romUrl: './roms/finalfantasytacticsadvance.gba', image: '/finalfantasytacticsadvance.jpeg', gif: '/finalfantasytacticsadvance.gif' },
+  { title: 'Street Fighter Alpha 3 (GBA)', romUrl: './roms/StreetFA2.gba', image: '/Streetfighter3.jpg', gif: '/street.gif' },
+  { title: 'Kirby Nightmare in Dream Land (GBA)', romUrl: './roms/kirbynightmareindreamland.gba', image: '/kirbynightmareindreamland.jpeg',gif: '/kirbynightmareindreamland.gif' },
+  { title: 'Super Mario 64 (N64)', romUrl: './roms/mario64.n64', image: '/mario64.jpg', gif: '/mario64.gif' },
+  { title: 'Pokemon Black (NDS)', romUrl: './roms/pokemonblack.nds', image: '/pokemonblack.jpg', gif: '/pokemonblack.gif' },
+  { title: 'Legend of Zelda Ocarina of Time (N64)', romUrl: './roms/LegendOfZeldaOcarinaOfTime64.n64', image: '/LegendOfZeldaOcarinaOfTime64.jpg', gif: '/LegendOfZeldaOcarinaOfTime64.gif' },
+  { title: 'Mis adventures of TronBonne (Playstation)', romUrl: './roms/MisadventuresofTronBonne/MisadventuresofTronBonne.bin', image: '/MisadventuresofTronBonne.jpg', gif: '/MisadventuresofTronBonne.gif' },
+  { title: 'Mega Man Legends 2 (Playstation)', romUrl: './roms/Mega Man Legends 2/Mega Man Legends 2(Track 1).bin', image: '/Mega Man Legends 2.jpg', gif: '/MegaManLegends2.gif' }
 ];
 
 export default EmulatorPlus;
