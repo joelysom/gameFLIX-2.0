@@ -3,8 +3,20 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./Cadastro.css";
 
+/**
+ * Componente de cadastro multi-etapas.
+ * 
+ * Este componente guia o usuário através de um processo de cadastro dividido em 4 etapas:
+ * 1. Dados Pessoais (Nome e Senha)
+ * 2. Informações Adicionais (Data de nascimento, E-mail e Plano)
+ * 3. Nostalgia (Campo de texto para compartilhar uma experiência pessoal)
+ * 4. Confirmação de Cadastro (Mensagem de sucesso)
+ * 
+ * @returns {JSX.Element} Componente de cadastro renderizado com etapas e validações.
+ */
 const Cadastro = () => {
-  const [step, setStep] = useState(1);
+  // Definição dos estados do componente
+  const [step, setStep] = useState(1);  // Controla a etapa atual do cadastro
   const [formData, setFormData] = useState({
     name: "",
     password: "",
@@ -12,15 +24,21 @@ const Cadastro = () => {
     email: "",
     plan: "Básico",
     nostalgia: "",
-  });
-  const [error, setError] = useState("");
-  const navigate = useNavigate();
+  });  // Armazena os dados inseridos pelo usuário
+  const [error, setError] = useState("");  // Mensagem de erro, caso ocorra algum problema
+  const navigate = useNavigate();  // Hook para navegação entre páginas
 
+  /**
+   * Avança para a próxima etapa do formulário.
+   * Realiza validações de dados conforme a etapa.
+   */
   const handleNext = () => {
+    // Validação para a primeira etapa
     if (step === 1 && (!formData.name || !formData.password)) {
       setError("Preencha todos os campos.");
       return;
     }
+    // Validação para a segunda etapa
     if (step === 2) {
       const birthYear = new Date(formData.birthdate).getFullYear();
       const currentYear = new Date().getFullYear();
@@ -33,18 +51,25 @@ const Cadastro = () => {
         return;
       }
     }
-    setError("");
-    setStep(step + 1);
+    setError("");  // Limpa a mensagem de erro
+    setStep(step + 1);  // Avança para a próxima etapa
   };
 
+  /**
+   * Volta para a etapa anterior do formulário.
+   */
   const handleBack = () => {
     setStep(step - 1);
   };
 
+  /**
+   * Envia os dados do formulário para o backend para o cadastro do usuário.
+   * Exibe a tela de conclusão após o envio com sucesso.
+   */
   const handleSubmit = async () => {
     try {
-      await axios.post("http://localhost:5000/register", formData);
-      setStep(4);  // Alterando para mostrar a tela final
+      await axios.post("http://localhost:5000/register", formData);  // Envia os dados do formulário para o servidor
+      setStep(4);  // Altera para a tela final de cadastro realizado
     } catch (err) {
       setError("Erro ao cadastrar. Verifique seus dados.");
     }
@@ -53,6 +78,7 @@ const Cadastro = () => {
   return (
     <div className="cadastro-container">
       <img className="background-image" src="/backgroundRegistro.jpg" alt="Background de Cadastro" />
+      {/* Etapa 1: Dados Pessoais */}
       {step === 1 && (
         <div className="step">
           <img className="step-image" src="/STEP1.png" alt="Passo 1" />
@@ -75,6 +101,7 @@ const Cadastro = () => {
           </div>
         </div>
       )}
+      {/* Etapa 2: Informações Adicionais */}
       {step === 2 && (
         <div className="step">
           <img className="step-image" src="/STEP2.png" alt="Passo 2" />
@@ -106,6 +133,7 @@ const Cadastro = () => {
           </div>
         </div>
       )}
+      {/* Etapa 3: Nostalgia */}
       {step === 3 && (
         <div className="step">
           <img className="step-image" src="/STEP3.png" alt="Passo 3" />
@@ -121,6 +149,7 @@ const Cadastro = () => {
           </div>
         </div>
       )}
+      {/* Etapa Final: Confirmação */}
       {step === 4 && (
         <div className="step">
           <img className="step-image" src="/STEPFINAL.png" alt="Cadastro Finalizado" />

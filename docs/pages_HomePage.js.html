@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: pages/HomePage.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: pages/HomePage.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React from 'react';
+import { Container, Row, Col, Card, Button } from 'react-bootstrap';
+import treinoForcaImg from '../assets/beautiful-perfect-body-woman-is-work-out-in-the-gym-free-photo.jpg';
+import cardioIntensoImg from '../assets/Cia-Athletica-Nacional-Treino-funcional-Mulher-definida-realizando-agachamento-com-elastico-na-academia.jpg';
+import treinoFuncionalImg from '../assets/images.jpg';
+import beneficioImg from '../assets/beneficio.jpg';
+
+/**
+ * Componente principal da página inicial da academia.
+ * Exibe as informações sobre os serviços, benefícios e planos da academia.
+ * 
+ * @returns {JSX.Element} A interface visual da página inicial da academia.
+ */
+function HomePage() {
+  return (
+    &lt;Container className="text-center mt-4">
+      &lt;h1>Bem-vindo à Academia&lt;/h1>
+      &lt;p>Seu corpo merece o melhor cuidado. Explore nossos serviços e treinos.&lt;/p>
+
+      {/* Seção de treinos */}
+      &lt;Row className="mt-4">
+        {/* Card de Treino de Força */}
+        &lt;Col md={4}>
+          &lt;Card>
+            &lt;Card.Img 
+              variant="top" 
+              src={treinoForcaImg} 
+              alt="Treino de Força" 
+              style={{ width: '100%', height: '200px', objectFit: 'cover' }} 
+            />
+            &lt;Card.Body>
+              &lt;Card.Title>Treino de Força&lt;/Card.Title>
+              &lt;Card.Text>
+                Aumente sua força com nossos treinos personalizados.
+              &lt;/Card.Text>
+            &lt;/Card.Body>
+          &lt;/Card>
+        &lt;/Col>
+
+        {/* Card de Cardio Intenso */}
+        &lt;Col md={4}>
+          &lt;Card>
+            &lt;Card.Img 
+              variant="top" 
+              src={cardioIntensoImg} 
+              alt="Treino Cardio Intenso" 
+              style={{ width: '100%', height: '200px', objectFit: 'cover' }} 
+            />
+            &lt;Card.Body>
+              &lt;Card.Title>Cardio Intenso&lt;/Card.Title>
+              &lt;Card.Text>
+                Melhore sua resistência com exercícios cardiovasculares.
+              &lt;/Card.Text>
+            &lt;/Card.Body>
+          &lt;/Card>
+        &lt;/Col>
+
+        {/* Card de Treino Funcional */}
+        &lt;Col md={4}>
+          &lt;Card>
+            &lt;Card.Img 
+              variant="top" 
+              src={treinoFuncionalImg} 
+              alt="Treino Funcional" 
+              style={{ width: '100%', height: '200px', objectFit: 'cover' }} 
+            />
+            &lt;Card.Body>
+              &lt;Card.Title>Treino Funcional&lt;/Card.Title>
+              &lt;Card.Text>
+                Desenvolva força e equilíbrio com treinos dinâmicos.
+              &lt;/Card.Text>
+            &lt;/Card.Body>
+          &lt;/Card>
+        &lt;/Col>
+      &lt;/Row>
+
+      {/* Seção de Benefício Especial */}
+      &lt;h2 className="mt-5">Benefício Especial&lt;/h2>
+      &lt;Row className="mt-4">
+        &lt;Col md={12}>
+          &lt;Card>
+            &lt;Card.Img 
+              variant="top" 
+              src={beneficioImg} 
+              alt="Benefício Especial" 
+              style={{ width: '100%', height: '300px', objectFit: 'cover' }} 
+            />
+            &lt;Card.Body>
+              &lt;Card.Title>Traga sua prima e ganhe benefícios!&lt;/Card.Title>
+              &lt;Card.Text>
+                Traga sua prima para nossa academia e receba um desconto exclusivo de 20% na sua mensalidade. 
+                Aproveite essa oportunidade!
+              &lt;/Card.Text>
+            &lt;/Card.Body>
+          &lt;/Card>
+        &lt;/Col>
+      &lt;/Row>
+
+      {/* Seção de Planos */}
+      &lt;h2 className="mt-5">Nossos Planos&lt;/h2>
+      &lt;Row className="mt-4">
+        {/* Card do Plano Básico */}
+        &lt;Col md={4}>
+          &lt;Card>
+            &lt;Card.Body>
+              &lt;Card.Title>Plano Básico&lt;/Card.Title>
+              &lt;Card.Text>
+                &lt;ul>
+                  &lt;li>Acesso à academia&lt;/li>
+                  &lt;li>Horário livre&lt;/li>
+                  &lt;li>Suporte básico&lt;/li>
+                &lt;/ul>
+                &lt;strong>R$ 99/mês&lt;/strong>
+              &lt;/Card.Text>
+              &lt;Button variant="primary">Assinar&lt;/Button>
+            &lt;/Card.Body>
+          &lt;/Card>
+        &lt;/Col>
+
+        {/* Card do Plano Plus */}
+        &lt;Col md={4}>
+          &lt;Card>
+            &lt;Card.Body>
+              &lt;Card.Title>Plano Plus&lt;/Card.Title>
+              &lt;Card.Text>
+                &lt;ul>
+                  &lt;li>Acesso total à academia&lt;/li>
+                  &lt;li>Aulas em grupo&lt;/li>
+                  &lt;li>Consultoria com treinador&lt;/li>
+                &lt;/ul>
+                &lt;strong>R$ 149/mês&lt;/strong>
+              &lt;/Card.Text>
+              &lt;Button variant="success">Assinar&lt;/Button>
+            &lt;/Card.Body>
+          &lt;/Card>
+        &lt;/Col>
+
+        {/* Card do Plano Premium */}
+        &lt;Col md={4}>
+          &lt;Card>
+            &lt;Card.Body>
+              &lt;Card.Title>Plano Premium&lt;/Card.Title>
+              &lt;Card.Text>
+                &lt;ul>
+                  &lt;li>Acesso VIP à academia&lt;/li>
+                  &lt;li>Personal Trainer dedicado&lt;/li>
+                  &lt;li>Suporte nutricional&lt;/li>
+                &lt;/ul>
+                &lt;strong>R$ 199/mês&lt;/strong>
+              &lt;/Card.Text>
+              &lt;Button variant="warning">Assinar&lt;/Button>
+            &lt;/Card.Body>
+          &lt;/Card>
+        &lt;/Col>
+      &lt;/Row>
+    &lt;/Container>
+  );
+}
+
+export default HomePage;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#%2522FileName%2522">"FileName"</a></li><li><a href="global.html#App">App</a></li><li><a href="global.html#Cadastro">Cadastro</a></li><li><a href="global.html#Creditos">Creditos</a></li><li><a href="global.html#Emulator">Emulator</a></li><li><a href="global.html#EmulatorPlus">EmulatorPlus</a></li><li><a href="global.html#HomePage">HomePage</a></li><li><a href="global.html#Layout">Layout</a></li><li><a href="global.html#Login">Login</a></li><li><a href="global.html#Navbar">Navbar</a></li><li><a href="global.html#getCore">getCore</a></li><li><a href="global.html#readRARContent">readRARContent</a></li><li><a href="global.html#start">start</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Sat Feb 08 2025 05:08:06 GMT-0300 (Horário Padrão de Brasília)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

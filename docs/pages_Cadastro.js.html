@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: pages/Cadastro.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: pages/Cadastro.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import "./Cadastro.css";
+
+/**
+ * Componente de cadastro multi-etapas.
+ * 
+ * Este componente guia o usuário através de um processo de cadastro dividido em 4 etapas:
+ * 1. Dados Pessoais (Nome e Senha)
+ * 2. Informações Adicionais (Data de nascimento, E-mail e Plano)
+ * 3. Nostalgia (Campo de texto para compartilhar uma experiência pessoal)
+ * 4. Confirmação de Cadastro (Mensagem de sucesso)
+ * 
+ * @returns {JSX.Element} Componente de cadastro renderizado com etapas e validações.
+ */
+const Cadastro = () => {
+  // Definição dos estados do componente
+  const [step, setStep] = useState(1);  // Controla a etapa atual do cadastro
+  const [formData, setFormData] = useState({
+    name: "",
+    password: "",
+    birthdate: "",
+    email: "",
+    plan: "Básico",
+    nostalgia: "",
+  });  // Armazena os dados inseridos pelo usuário
+  const [error, setError] = useState("");  // Mensagem de erro, caso ocorra algum problema
+  const navigate = useNavigate();  // Hook para navegação entre páginas
+
+  /**
+   * Avança para a próxima etapa do formulário.
+   * Realiza validações de dados conforme a etapa.
+   */
+  const handleNext = () => {
+    // Validação para a primeira etapa
+    if (step === 1 &amp;&amp; (!formData.name || !formData.password)) {
+      setError("Preencha todos os campos.");
+      return;
+    }
+    // Validação para a segunda etapa
+    if (step === 2) {
+      const birthYear = new Date(formData.birthdate).getFullYear();
+      const currentYear = new Date().getFullYear();
+      if (currentYear - birthYear &lt; 18) {
+        setError("Você precisa ter pelo menos 18 anos.");
+        return;
+      }
+      if (!formData.email) {
+        setError("Preencha o campo de e-mail.");
+        return;
+      }
+    }
+    setError("");  // Limpa a mensagem de erro
+    setStep(step + 1);  // Avança para a próxima etapa
+  };
+
+  /**
+   * Volta para a etapa anterior do formulário.
+   */
+  const handleBack = () => {
+    setStep(step - 1);
+  };
+
+  /**
+   * Envia os dados do formulário para o backend para o cadastro do usuário.
+   * Exibe a tela de conclusão após o envio com sucesso.
+   */
+  const handleSubmit = async () => {
+    try {
+      await axios.post("http://localhost:5000/register", formData);  // Envia os dados do formulário para o servidor
+      setStep(4);  // Altera para a tela final de cadastro realizado
+    } catch (err) {
+      setError("Erro ao cadastrar. Verifique seus dados.");
+    }
+  };
+
+  return (
+    &lt;div className="cadastro-container">
+      &lt;img className="background-image" src="/backgroundRegistro.jpg" alt="Background de Cadastro" />
+      {/* Etapa 1: Dados Pessoais */}
+      {step === 1 &amp;&amp; (
+        &lt;div className="step">
+          &lt;img className="step-image" src="/STEP1.png" alt="Passo 1" />
+          &lt;div className="step-content">
+            &lt;h2>Etapa 1: Dados Pessoais&lt;/h2>
+            &lt;input
+              type="text"
+              placeholder="Nome"
+              value={formData.name}
+              onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+            />
+            &lt;input
+              type="password"
+              placeholder="Senha"
+              value={formData.password}
+              onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+            />
+            {error &amp;&amp; &lt;p className="error">{error}&lt;/p>}
+            &lt;button onClick={handleNext}>Próximo&lt;/button>
+          &lt;/div>
+        &lt;/div>
+      )}
+      {/* Etapa 2: Informações Adicionais */}
+      {step === 2 &amp;&amp; (
+        &lt;div className="step">
+          &lt;img className="step-image" src="/STEP2.png" alt="Passo 2" />
+          &lt;div className="step-content">
+            &lt;h2>Etapa 2: Informações Adicionais&lt;/h2>
+            &lt;input
+              type="date"
+              value={formData.birthdate}
+              onChange={(e) => setFormData({ ...formData, birthdate: e.target.value })}
+            />
+            &lt;input
+              type="email"
+              placeholder="E-mail"
+              value={formData.email}
+              onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+            />
+            &lt;select
+              value={formData.plan}
+              onChange={(e) => setFormData({ ...formData, plan: e.target.value })}
+            >
+              &lt;option value="Básico">Básico&lt;/option>
+              &lt;option value="Plus">Plus&lt;/option>
+              &lt;option value="Gold">Gold&lt;/option>
+              &lt;option value="Diamond">Diamond&lt;/option>
+            &lt;/select>
+            {error &amp;&amp; &lt;p className="error">{error}&lt;/p>}
+            &lt;button onClick={handleBack}>Voltar&lt;/button>
+            &lt;button onClick={handleNext}>Próximo&lt;/button>
+          &lt;/div>
+        &lt;/div>
+      )}
+      {/* Etapa 3: Nostalgia */}
+      {step === 3 &amp;&amp; (
+        &lt;div className="step">
+          &lt;img className="step-image" src="/STEP3.png" alt="Passo 3" />
+          &lt;div className="step-content">
+            &lt;h2>Etapa 3: Nostalgia&lt;/h2>
+            &lt;textarea
+              placeholder="Fale um pouco sobre sua nostalgia..."
+              value={formData.nostalgia}
+              onChange={(e) => setFormData({ ...formData, nostalgia: e.target.value })}
+            />
+            &lt;button onClick={handleBack}>Voltar&lt;/button>
+            &lt;button onClick={handleSubmit}>Concluir&lt;/button>
+          &lt;/div>
+        &lt;/div>
+      )}
+      {/* Etapa Final: Confirmação */}
+      {step === 4 &amp;&amp; (
+        &lt;div className="step">
+          &lt;img className="step-image" src="/STEPFINAL.png" alt="Cadastro Finalizado" />
+          &lt;div className="step-content">
+            &lt;h2>Parabéns, Cadastro Realizado!&lt;/h2>
+            &lt;button onClick={() => navigate("/")}>Continuar para Área de Login&lt;/button>
+          &lt;/div>
+        &lt;/div>
+      )}
+    &lt;/div>
+  );
+};
+
+export default Cadastro;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#%2522FileName%2522">"FileName"</a></li><li><a href="global.html#App">App</a></li><li><a href="global.html#Cadastro">Cadastro</a></li><li><a href="global.html#Creditos">Creditos</a></li><li><a href="global.html#Emulator">Emulator</a></li><li><a href="global.html#EmulatorPlus">EmulatorPlus</a></li><li><a href="global.html#HomePage">HomePage</a></li><li><a href="global.html#Layout">Layout</a></li><li><a href="global.html#Login">Login</a></li><li><a href="global.html#Navbar">Navbar</a></li><li><a href="global.html#getCore">getCore</a></li><li><a href="global.html#readRARContent">readRARContent</a></li><li><a href="global.html#start">start</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Sat Feb 08 2025 05:08:06 GMT-0300 (Horário Padrão de Brasília)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

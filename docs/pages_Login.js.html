@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: pages/Login.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: pages/Login.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import "./Login.css";
+
+/**
+ * Componente de Login da aplicação.
+ * Permite que o usuário faça login, escute música de fundo e visualize um vídeo de introdução.
+ * 
+ * @returns {JSX.Element} O formulário de login com áudio e vídeo de fundo.
+ */
+const Login = () => {
+  const [email, setEmail] = useState(""); // Armazena o e-mail do usuário
+  const [password, setPassword] = useState(""); // Armazena a senha do usuário
+  const [error, setError] = useState(""); // Armazena mensagens de erro, caso haja
+  const [isAudioPlaying, setIsAudioPlaying] = useState(false); // Controle se o áudio está tocando
+  const [isIntroVideoVisible, setIsIntroVideoVisible] = useState(false); // Controle se o vídeo de introdução é visível
+  const navigate = useNavigate();
+
+  /**
+   * Função chamada quando o usuário tenta fazer login.
+   * Envia uma requisição para o servidor para validar o login.
+   * Caso o login seja bem-sucedido, exibe o vídeo de introdução.
+   */
+  const handleLogin = async () => {
+    try {
+      const response = await axios.post("http://localhost:5000/login", {
+        email,
+        password,
+      });
+      if (response.status === 200) {
+        setIsIntroVideoVisible(true); // Exibe o vídeo após o login bem-sucedido
+        // Redireciona após o vídeo terminar
+        setTimeout(() => {
+          navigate("/EmulatorPlus");
+        }, 7000); // Ajuste o tempo conforme a duração do seu vídeo
+      }
+    } catch (err) {
+      setError("Usuário ou senha incorretos.");
+    }
+  };
+
+  /**
+   * Função para reproduzir a música de fundo ao ser chamada.
+   * Altera o estado de `isAudioPlaying` para true.
+   */
+  const handleAudioPlay = () => {
+    const audio = document.getElementById("background-audio");
+    if (audio) {
+      audio.play();
+      setIsAudioPlaying(true);
+    }
+  };
+
+  /**
+   * Redireciona o usuário para a página de cadastro.
+   */
+  const handleCadastroRedirect = () => {
+    navigate("/cadastro");
+  };
+
+  return (
+    &lt;div className="login-container">
+      &lt;video className="background-video" autoPlay loop muted>
+        &lt;source src="/loginbg.mp4" type="video/mp4" />
+      &lt;/video>
+      &lt;audio id="background-audio" loop>
+        &lt;source src="/popular.mp3" type="audio/mp3" />
+      &lt;/audio>
+      {!isAudioPlaying &amp;&amp; (
+        &lt;button className="play-audio-button" onClick={handleAudioPlay}>
+          Reproduzir Música
+        &lt;/button>
+      )}
+      &lt;img src="/title.png" alt="Título" className="title-image" />
+      &lt;div className="login-box">
+        &lt;h2>LOGIN&lt;/h2>
+        &lt;input
+          type="text"
+          placeholder="E-Mail"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        &lt;input
+          type="password"
+          placeholder="Senha"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        {error &amp;&amp; &lt;p className="error">{error}&lt;/p>}
+        &lt;div className="login-buttons">
+          &lt;button onClick={handleLogin}>Entrar&lt;/button>
+          &lt;button onClick={handleCadastroRedirect}>Cadastrar&lt;/button>
+        &lt;/div>
+      &lt;/div>
+
+      {/* Vídeo de introdução */}
+      {isIntroVideoVisible &amp;&amp; (
+        &lt;div className="intro-video-overlay">
+          &lt;video className="intro-video" autoPlay>
+            &lt;source src="./intro.mp4" type="video/mp4" />
+          &lt;/video>
+        &lt;/div>
+      )}
+    &lt;/div>
+  );
+};
+
+export default Login;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#%2522FileName%2522">"FileName"</a></li><li><a href="global.html#App">App</a></li><li><a href="global.html#Cadastro">Cadastro</a></li><li><a href="global.html#Creditos">Creditos</a></li><li><a href="global.html#Emulator">Emulator</a></li><li><a href="global.html#EmulatorPlus">EmulatorPlus</a></li><li><a href="global.html#HomePage">HomePage</a></li><li><a href="global.html#Layout">Layout</a></li><li><a href="global.html#Login">Login</a></li><li><a href="global.html#Navbar">Navbar</a></li><li><a href="global.html#getCore">getCore</a></li><li><a href="global.html#readRARContent">readRARContent</a></li><li><a href="global.html#start">start</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Sat Feb 08 2025 05:08:06 GMT-0300 (Horário Padrão de Brasília)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

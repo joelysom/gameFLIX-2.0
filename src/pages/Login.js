@@ -3,14 +3,25 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./Login.css";
 
+/**
+ * Componente de Login da aplicação.
+ * Permite que o usuário faça login, escute música de fundo e visualize um vídeo de introdução.
+ * 
+ * @returns {JSX.Element} O formulário de login com áudio e vídeo de fundo.
+ */
 const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-  const [isAudioPlaying, setIsAudioPlaying] = useState(false);
-  const [isIntroVideoVisible, setIsIntroVideoVisible] = useState(false); // Estado para controlar o vídeo
+  const [email, setEmail] = useState(""); // Armazena o e-mail do usuário
+  const [password, setPassword] = useState(""); // Armazena a senha do usuário
+  const [error, setError] = useState(""); // Armazena mensagens de erro, caso haja
+  const [isAudioPlaying, setIsAudioPlaying] = useState(false); // Controle se o áudio está tocando
+  const [isIntroVideoVisible, setIsIntroVideoVisible] = useState(false); // Controle se o vídeo de introdução é visível
   const navigate = useNavigate();
 
+  /**
+   * Função chamada quando o usuário tenta fazer login.
+   * Envia uma requisição para o servidor para validar o login.
+   * Caso o login seja bem-sucedido, exibe o vídeo de introdução.
+   */
   const handleLogin = async () => {
     try {
       const response = await axios.post("http://localhost:5000/login", {
@@ -29,6 +40,10 @@ const Login = () => {
     }
   };
 
+  /**
+   * Função para reproduzir a música de fundo ao ser chamada.
+   * Altera o estado de `isAudioPlaying` para true.
+   */
   const handleAudioPlay = () => {
     const audio = document.getElementById("background-audio");
     if (audio) {
@@ -37,6 +52,9 @@ const Login = () => {
     }
   };
 
+  /**
+   * Redireciona o usuário para a página de cadastro.
+   */
   const handleCadastroRedirect = () => {
     navigate("/cadastro");
   };
