@@ -154,6 +154,7 @@ const EmulatorPlus = () => {
 
 const games = [
   { title: 'Pokémon FireRed (GBA)', romUrl: './roms/firered.gba', image: '/firered.jpeg', gif: '/firered.gif' },
+  { title: 'Sonic Advance 2 (GBA)', romUrl: './roms/sonicadvance2.gba', image: '/sonicadvance2.png', gif: '/sonicadvance2.gif' },
   { title: 'Final Fantasy Tactics Advance (GBA)', romUrl: './roms/finalfantasytacticsadvance.gba', image: '/finalfantasytacticsadvance.jpeg', gif: '/finalfantasytacticsadvance.gif' },
   { title: 'Street Fighter Alpha 3 (GBA)', romUrl: './roms/StreetFA2.gba', image: '/Streetfighter3.jpg', gif: '/street.gif' },
   { title: 'Kirby Nightmare in Dream Land (GBA)', romUrl: './roms/kirbynightmareindreamland.gba', image: '/kirbynightmareindreamland.jpeg',gif: '/kirbynightmareindreamland.gif' },

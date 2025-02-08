@@ -1,0 +1,94 @@
+/* Login.css */
+.login-container {
+    position: relative;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+  }
+  
+  .background-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1;
+  }
+  
+  .play-audio-button {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 10px 20px;
+    background-color: #333;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .login-box {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.7);
+    text-align: center;
+    text-decoration: wavy;
+    text-shadow: #3b9a64;
+    color: rgb(43, 244, 7);
+    padding: 30px;
+    padding-right: 50px;
+    border-radius: 10px;
+    width: 300px; /* Definindo largura fixa para a caixa de login */
+  }
+  
+  input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 5px;
+  }
+  
+  button {
+    padding: 10px 20px;
+    background-color: #333;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .error {
+    color: red;
+  }
+  
+  .title-image {
+    width: 250px; /* Definindo largura do título */
+    margin-bottom: 500px; /* Espaçamento entre o título e a caixa de login *
+    display: block; /* Fazendo com que o título ocupe uma linha inteira */
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .login-buttons button {
+    padding: 10px 20px;
+    background-color: #50C878;  /* Verde Esmeralda */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+  
+  .login-buttons button:first-child {
+    margin-right: 125px;  /* Adiciona margem à direita do botão "Entrar" */
+  }
+  
+  .login-buttons button:hover {
+    background-color: #3b9a64;  /* Cor mais escura de verde para o hover */
+  }
+  

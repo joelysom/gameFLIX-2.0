@@ -15,7 +15,7 @@ nav {
   padding: 1rem;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
   display: flex;
-  justify-content: flex-start; /* Modificado de space-between para flex-start */
+  justify-content: flex-start;
   align-items: center;
   z-index: 50;
 }
@@ -24,10 +24,8 @@ nav ul {
   list-style: none;
   display: flex;
   gap: 1rem;
-  margin-left: 35rem; /* Mover os links para a esquerda */
+  margin-left: 35rem;
 }
-
-
 
 nav ul li a {
   color: white;
@@ -42,5 +40,11 @@ nav ul li a:hover {
 .logo {
   height: 50px;
   width: auto;
-  margin-left: 5rem; /* Mover os links para a esquerda */
+  margin-left: 5rem;
+}
+
+.logout-button {
+  height: 30px;
+  width: auto;
+  margin-left: 1rem;
 }
