@@ -1,5 +1,5 @@
 import React from 'react';
-import './Footer.css';  // Importa o arquivo de estilo para o rodapé
+import './Styles/Footer.css';  // Importa o arquivo de estilo para o rodapé
 
 const Footer = () => {
   return (

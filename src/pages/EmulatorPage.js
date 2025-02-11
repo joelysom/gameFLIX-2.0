@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import "./EmulatorPage.css";
+import "./Styles/EmulatorPage.css";
 
 /**
  * Componente principal para carregar e iniciar o emulador de ROMs.

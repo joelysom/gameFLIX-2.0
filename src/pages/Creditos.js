@@ -1,5 +1,5 @@
 import React from "react";
-import "./Creditos.css";
+import "./Styles/Creditos.css";
 
 /**
  * Componente de créditos do projeto.

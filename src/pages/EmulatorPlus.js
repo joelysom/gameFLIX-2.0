@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import './EmulatorPlus.module.css';
+import './Styles/EmulatorPlus.module.css';
 
 /**
  * Componente principal do emulador, permitindo a interação com ROMs e a configuração de ambientes de jogo.

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 // Importa o arquivo de estilo para os cards de jogos (caso seja necessário)
-import './GameCards.module.css';
+import './Styles/GameCards.module.css';
 
 const GameCards = () => {
   // Estado que controla se o jogo foi carregado ou não

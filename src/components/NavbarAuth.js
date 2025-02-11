@@ -1,7 +1,7 @@
 // components/Navbar.js
 
 // Importa o arquivo CSS para a estilização do componente
-import "./NavbarComponent.css";
+import "./Styles/NavbarComponent.css";
 // Importa o React para criar o componente
 import React from "react";
 // Importa a imagem do título que será usada no logo da navbar
