@@ -1,72 +1,168 @@
-# Documentação do Projeto "Session Fit"
-
-## Equipe de Desenvolvimento
-- **Pedro Lucas**
-- **Sérgio Rennan**
+Aqui está a documentação atualizada com as novas dependências incluídas:
 
 ---
 
-## Descrição do Site
+## Documentação do Projeto: Emulador Sega Genesis com React
+![GamingFlix](gamingFLIX.PNG)
 
-O projeto "Session Fit" é um site desenvolvido para uma academia que visa apresentar seus serviços, planos e informações institucionais. O site oferece uma experiência de navegação intuitiva e um design moderno, proporcionando aos usuários acesso rápido a informações como:
-
-- **Treinos Disponíveis:** Apresentação de diferentes tipos de treinos, como Treino de Força, Cardio Intenso e Treino Funcional.
-- **Planos:** Descrição detalhada dos planos oferecidos pela academia.
-- **Sobre:** Informações sobre a história e os valores da academia.
-- **Contato:** Formulário e meios de comunicação para os usuários.
-
-O objetivo é facilitar o acesso dos clientes às informações e promover uma melhor experiência de usuário.
+### Introdução
+Este projeto tem como objetivo desenvolver Site Estilo Netflix com emuladores utilizando React como base para a interface. A aplicação permite a execução de jogos de Gameboy á Playstation, proporcionando uma experiência nostálgica para os usuários.
 
 ---
 
-## Estrutura de Organização do Projeto
+### Tecnologias Utilizadas
 
-O projeto é dividido em pastas e arquivos de forma clara para manter a organização do código:
-
-### Diretórios e Arquivos Principais:
-
-- **`/src`**: Contém todo o código fonte do projeto.
-  - **`/assets`**: Armazena imagens e recursos estáticos.
-  - **`App.js`**: Componente principal que define a estrutura geral do site.
-  - **`App.css`**: Arquivo de estilos principais.
-  - **`index.js`**: Ponto de entrada do aplicativo React.
-  - **`components/`**: Componentes reutilizáveis, como Navbar, Footer, Cards, etc.
-
-- **`/public`**: Contém arquivos públicos acessíveis diretamente pelo navegador.
-  - **`index.html`**: Template HTML principal.
+- **React**: Biblioteca principal para o desenvolvimento da interface do usuário.
+- **React Router DOM**: Gerenciamento de rotas para navegação dentro da aplicação.
+- **EmulatorPlus/JS**: Lógica completa do hardware dos Emuladores.
+- **React DOM**: Renderização dos componentes React no DOM.
+- **React Scripts**: Scripts e ferramentas de suporte ao desenvolvimento.
+- **CRA Template**: Template base para inicializar o projeto com Create React App.
 
 ---
 
-## Hooks Utilizados
+### Estrutura do Projeto
 
-O projeto faz uso dos seguintes hooks do React para funcionalidade dinâmica:
+Abaixo está a estrutura inicial do projeto:
 
-1. **`useState`**:
-   - Gerenciamento de estados locais dentro dos componentes, como controlar a exibição de menus dropdown.
-
-2. **`useEffect`**:
-   - Gerenciamento de efeitos colaterais, como alterações baseadas em atualizações de dados ou carregamento inicial.
+```
+GameFlix2.0/
+├── node_modules/       # Dependências do projeto
+├── public/             # Arquivos públicos, como index.html
+├── src/                    # Código-fonte principal
+│   ├── assets/             # Arquivos de mídia e estáticos
+│   ├── backend/            # Lógica do servidor e banco de dados
+│   │   ├── db.js           # Configuração do banco de dados
+│   │   ├── server.js       # Servidor principal
+│   │   ├── user_data.db    # Banco de dados de usuários
+│   ├── components/         # Componentes reutilizáveis
+│   │   ├── Styles/         # Estilos dos componentes
+│   │   ├── Footer.js       # Rodapé da aplicação
+│   │   ├── GameCards.js    # Cartões de jogos
+│   │   ├── Navbar.js       # Barra de navegação
+│   │   ├── NavbarAuth.js   # Navbar com autenticação
+│   │   ├── EmulatorPlus.js # Componente adicional do emulador
+│   ├── pages/              # Páginas principais da aplicação
+│   │   ├── Styles/         # Estilos das páginas
+│   │   ├── Cadastro.js     # Página de cadastro de usuários
+│   │   ├── Creditos.js     # Página de créditos
+│   │   ├── EmulatorLogic.js# Lógica principal do emulador
+│   │   ├── EmulatorPage.js # Página do emulador
+│   │   ├── EmulatorPlus.js # Página extra do emulador
+│   │   ├── Login.js        # Página de login
+│   │   ├── SelectUser.js   # Página de Seleção de Perfil
+│   ├── App.js              # Componente principal da aplicação
+│   ├── App.css             # Estilos globais da aplicação
+│   ├── index.js        # Ponto de entrada do React
+├── .gitignore          # Arquivos ignorados pelo Git
+├── package.json        # Configuração do projeto e dependências
+├── README.md           # Informações gerais do projeto
+```
 
 ---
 
-## Estrutura de Navegação
+### Configuração do Ambiente
 
-A navegação do site é gerenciada pela biblioteca `react-router-dom`. A estrutura inclui as seguintes rotas:
+#### Pré-requisitos
 
-- **`/`**: Rota principal que carrega a página inicial com informações sobre treinos e planos.
-- **`/about`**: Página "Sobre" com informações institucionais.
-- **`/contact`**: Página "Contato" com um formulário de envio de mensagens.
+Certifique-se de ter as seguintes ferramentas instaladas no seu ambiente de desenvolvimento:
 
-Cada rota é vinculada a um componente React que renderiza o conteúdo correspondente.
+- **Node.js** (>= 14.x)
+- **Yarn** ou **npm**
+
+#### Passos para Instalação
+
+1. Clone o repositório:
+   ```bash
+   git clone https://github.com/seu-usuario/sega-genesis-emulator.git
+   ```
+
+2. Navegue para o diretório do projeto:
+   ```bash
+   cd sega-genesis-emulator
+   ```
+
+3. Instale as dependências:
+   ```bash
+   npm install
+   ```
+
+4. Inicie o servidor de desenvolvimento:
+   ```bash
+   npm start
+   ```
+
+5. Acesse a aplicação no navegador:
+   ```bash
+   http://localhost:3000
+   ```
 
 ---
 
-## Bibliotecas Utilizadas
+### Funcionalidades
 
-1. **`React`**: Biblioteca principal para criação da interface do usuário.
-2. **`React Bootstrap`**: Framework CSS para componentes responsivos e estilização.
-3. **`react-router-dom`**: Gerenciamento de rotas para navegação entre páginas.
+- **Carregar ROMs**: O usuário pode Jogar Jogos Retro de plataformas como GameBoy Advance, SNS, Mega Drive, GENESIS, GBC, GB.
+- **Controles Virtuais**: Interface para controles do jogo aparece para dispositivos celulares e tablets.
+![Keys](gameflixKeys.png)
+- **Salvamento de Progresso**: Possibilidade de salvar e carregar estados dos jogos.
+- **Configurações de Login**: Para acessar a interface, o usuário deve fazer login com E-Mail e Senha.
+- **Configurações de Cadastro**: Para cadastrar o Conta no banco de dados.
+- **Seleção de Perfis Estilo Netflix**: Para diversificar e deixar mais bonito o projeto todo.
+- **Carregar Jogo Salvo**: O projeto tem opçao para Importar/Exportar Dados de salvamento do jogo, evitando que o usuário tenha que recomeçar o jogo.
+- **Carregamento de Cheats**: Para usuários mais preguiçosos com o processo dos jogos, podem adicionar cheats codes.
+- **Aumentar a tela/Zoom/FullScreen**: Para facilitar a jogabilidade dando mais visão.
+- **Verificação de cachê**: para limpar ou analisar o cachê de jogos carregados.
+- **Play, Pausa, Acelerar**: pode pausar o jogo independente da fase, voltar a dar play ou acelerar o jogo em cenas lentas.
 
 ---
 
+### Bibliotecas Utilizadas
 
+#### Lista de Dependências
+
+- `axios@^1.7.9`
+- `bcrypt@^5.1.1`
+- `bootstrap@^5.3.3`
+- `cors@^2.8.5`
+- `cra-template@1.2.0`
+- `express@^4.21.2`
+- `GameFlix@file:`
+- `react@^19.0.0`
+- `react-bootstrap@^2.10.8`
+- `react-dom@^19.0.0`
+- `react-router-dom@^7.1.3`
+- `react-scripts@5.0.1`
+- `sqlite3@^5.1.7`
+
+---
+
+#### Emulator.js  
+**Descrição:** Emulator.js é uma biblioteca de emulação baseada em JavaScript, projetada para fornecer suporte a emuladores de consoles retro, incluindo o Sega Genesis. Ele oferece uma performance eficiente e é altamente compatível com vários tipos de hardware retro. Essa biblioteca permite que você crie emuladores web de forma simples e acessível.
+
+**Documentação:** [Emulator.js GitHub](https://github.com/EmulatorJS/EmulatorJS)
+
+---
+
+### Roadmap
+
+- [x] Configurar ambiente de desenvolvimento
+- [x] Implementar interface inicial
+- [x] ROMs hospedadas no react
+- [x] Adicionar suporte a ROMs
+- [x] Implementar controles virtuais
+- [x] Desenvolver sistema de salvamento
+- [x] Sistema de Seleção de perfis na conta
+- [x] Banco de dados funcional no Back-End
+- [ ] Testes finais e lançamento
+
+---
+
+### Finalização
+
+*"É preciso desafiar as regras para encontrar a verdadeira liberdade; às vezes, voar contra o vento é a única maneira de alcançar o que parece impossível."* – **Elphaba, Wicked.**
+
+Essa frase reflete a ousadia de criar algo inovador e desafiar limites.
+
+--- 
+
+Agora, a documentação inclui as novas dependências como `axios`, `bcrypt`, `express`, `react-bootstrap`, `sqlite3` e outras.

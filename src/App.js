@@ -9,6 +9,7 @@ import EmulatorPlus from './pages/EmulatorPlus';
 import EmulatorPage from './pages/EmulatorPage';
 import Creditos from './pages/Creditos';
 import Footer from './components/Footer';
+import SelectUser from './pages/SelectUser';
 import './App.css';
 
 /**
@@ -51,6 +52,7 @@ function Layout() {
         <Route path="/Cadastro" element={<Cadastro />} />
         <Route path="/EmulatorPlus" element={<EmulatorPlus />} />
         <Route path="/Creditos" element={<Creditos />} />
+        <Route path="/select-user" element={<SelectUser />} />
       </Routes>
       <Footer />
     </>

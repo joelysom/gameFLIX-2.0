@@ -2,6 +2,7 @@
 const sqlite3 = require('sqlite3').verbose();
 const path = require('path');
 
+// Cria ou abre o banco de dados
 const db = new sqlite3.Database(path.join(__dirname, 'user_data.db'), (err) => {
   if (err) {
     console.error('Erro ao abrir o banco de dados', err);
@@ -10,7 +11,7 @@ const db = new sqlite3.Database(path.join(__dirname, 'user_data.db'), (err) => {
   }
 });
 
-// Cria tabela de usuários
+// Função para criar a tabela de usuários, se não existir
 db.run(`
   CREATE TABLE IF NOT EXISTS users (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -20,17 +21,6 @@ db.run(`
     birthdate TEXT,
     plan TEXT,
     nostalgia TEXT
-  )
-`);
-
-// Cria tabela de perfis dentro de uma conta
-db.run(`
-  CREATE TABLE IF NOT EXISTS profiles (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    user_id INTEGER NOT NULL,
-    profile_name TEXT NOT NULL,
-    profile_picture TEXT NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
   )
 `);
 

@@ -1,96 +1,100 @@
-// src/backend/server.js
-
 const express = require('express');
 const cors = require('cors');
 const bcrypt = require('bcrypt');
 const db = require('./db');
 const app = express();
 
-// Middleware
-app.use(express.json());  // Middleware para parsear o corpo das requisições em JSON
-app.use(cors());  // Middleware para permitir requisições CORS (Cross-Origin Resource Sharing)
+app.use(express.json());
+app.use(cors());
 
-// Rota de Login
-/**
- * Rota POST para realizar o login.
- * Verifica se o e-mail existe no banco de dados e se a senha é válida.
- * 
- * @param {string} req.body.email - E-mail do usuário
- * @param {string} req.body.password - Senha do usuário
- * @returns {Response} Resposta com status 200 para sucesso, 401 para falha de autenticação, ou 500 para erro no servidor
- */
+// Rota para buscar perfis de um usuário
+app.get('/profiles/:userId', (req, res) => {
+  const { userId } = req.params;
+  db.all('SELECT * FROM profiles WHERE user_id = ?', [userId], (err, rows) => {
+    if (err) {
+      return res.status(500).send('Erro ao buscar perfis');
+    }
+    res.json(rows); // Retorna todos os perfis do usuário
+  });
+});
+
+// Rota para criar um novo perfil
+app.post('/profiles', (req, res) => {
+  const { userId, profile_name, profile_picture } = req.body;  // Alterado para 'profile_name' e 'profile_picture'
+  db.run(
+    'INSERT INTO profiles (user_id, profile_name, profile_picture) VALUES (?, ?, ?)',
+    [userId, profile_name, profile_picture], // Usando 'profile_name' e 'profile_picture'
+    function (err) {
+      if (err) {
+        return res.status(500).send('Erro ao criar perfil');
+      }
+      res.status(201).json({ id: this.lastID });
+    }
+  );
+});
+
+// Rota para deletar um perfil
+app.delete('/profiles/:id', (req, res) => {
+  const { id } = req.params;
+  db.run('DELETE FROM profiles WHERE id = ?', [id], (err) => {
+    if (err) {
+      return res.status(500).send('Erro ao deletar perfil');
+    }
+    res.status(200).send('Perfil deletado com sucesso');
+  });
+});
+
+// Rota para cadastro de usuários
+app.post('/register', async (req, res) => {
+  const { name, password, birthdate, email, plan, nostalgia } = req.body;
+
+  if (!name || !password || !birthdate || !email) {
+    return res.status(400).json({ error: 'Preencha todos os campos obrigatórios' });
+  }
+
+  try {
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    db.run(
+      'INSERT INTO users (name, password, birthdate, email, plan, nostalgia) VALUES (?, ?, ?, ?, ?, ?)',
+      [name, hashedPassword, birthdate, email, plan, nostalgia],
+      function (err) {
+        if (err) {
+          return res.status(500).json({ error: 'Erro ao registrar usuário' });
+        }
+        res.status(201).json({ message: 'Usuário registrado com sucesso', userId: this.lastID });
+      }
+    );
+  } catch (error) {
+    res.status(500).json({ error: 'Erro ao processar o cadastro' });
+  }
+});
+
+// Rota para login de usuários
 app.post('/login', (req, res) => {
   const { email, password } = req.body;
 
-  // Verifica se o e-mail existe no banco de dados
-  db.get('SELECT * FROM users WHERE email = ?', [email], (err, row) => {
+  if (!email || !password) {
+    return res.status(400).json({ error: 'E-mail e senha são obrigatórios' });
+  }
+
+  db.get('SELECT * FROM users WHERE email = ?', [email], async (err, user) => {
     if (err) {
-      return res.status(500).send('Erro no banco de dados');  // Erro no banco de dados
+      return res.status(500).json({ error: 'Erro ao buscar usuário' });
     }
-    if (!row) {
-      return res.status(401).send('Usuário não encontrado');  // E-mail não encontrado
+    if (!user) {
+      return res.status(401).json({ error: 'Usuário ou senha incorretos' });
     }
 
-    // Compara a senha fornecida com a senha criptografada no banco
-    bcrypt.compare(password, row.password, (err, result) => {
-      if (err || !result) {
-        return res.status(401).send('Senha incorreta');  // Senha incorreta
-      }
-      res.status(200).send('Login bem-sucedido');  // Login bem-sucedido
-    });
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    if (!isPasswordValid) {
+      return res.status(401).json({ error: 'Usuário ou senha incorretos' });
+    }
+
+    res.status(200).json({ message: 'Login bem-sucedido', userId: user.id });
   });
 });
 
-// Rota de Cadastro
-/**
- * Rota POST para realizar o cadastro de um novo usuário.
- * Verifica se o e-mail já está cadastrado e criptografa a senha antes de salvar.
- * 
- * @param {string} req.body.name - Nome do usuário
- * @param {string} req.body.email - E-mail do usuário
- * @param {string} req.body.password - Senha do usuário
- * @param {string} req.body.birthdate - Data de nascimento do usuário
- * @param {string} req.body.plan - Plano escolhido pelo usuário
- * @param {string} req.body.nostalgia - Texto relacionado à nostalgia do usuário
- * @returns {Response} Resposta com status 201 para sucesso, 400 para e-mail já cadastrado, ou 500 para erro no servidor
- */
-app.post('/register', (req, res) => {
-  const { name, email, password, birthdate, plan, nostalgia } = req.body;
-
-  // Verifica se o e-mail já existe
-  db.get('SELECT * FROM users WHERE email = ?', [email], (err, row) => {
-    if (err) {
-      return res.status(500).send('Erro no banco de dados');  // Erro no banco de dados
-    }
-    if (row) {
-      return res.status(400).send('E-mail já cadastrado');  // E-mail já registrado
-    }
-
-    // Criptografa a senha antes de salvar
-    bcrypt.hash(password, 10, (err, hashedPassword) => {
-      if (err) {
-        return res.status(500).send('Erro ao criptografar a senha');  // Erro ao criptografar a senha
-      }
-
-      // Insere o novo usuário no banco de dados
-      db.run(
-        'INSERT INTO users (name, email, password, birthdate, plan, nostalgia) VALUES (?, ?, ?, ?, ?, ?)',
-        [name, email, hashedPassword, birthdate, plan, nostalgia],
-        function (err) {
-          if (err) {
-            return res.status(500).send('Erro ao cadastrar usuário');  // Erro ao inserir o usuário
-          }
-          res.status(201).send('Usuário cadastrado com sucesso');  // Cadastro bem-sucedido
-        }
-      );
-    });
-  });
-});
-
-// Iniciar o servidor
-/**
- * Inicializa o servidor na porta 5000.
- */
 app.listen(5000, () => {
   console.log('Servidor rodando na porta 5000');
 });

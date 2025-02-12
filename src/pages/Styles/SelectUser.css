@@ -1,0 +1,71 @@
+/* src/pages/Styles/SelectUser.css */
+.select-user-container {
+    text-align: center;
+    margin-top: 50px;
+}
+
+.profiles-grid {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.profile-card {
+    width: 120px;
+    height: 180px; /* Aumentei a altura para dar mais espaço */
+    border-radius: 10px;
+    background-color: #222;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between; /* Garante que o botão fique na parte inferior */
+    position: relative;
+    transition: 0.3s;
+    padding: 10px;
+}
+
+.profile-card:hover {
+    background-color: #444;
+}
+
+.profile-card img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+}
+
+.profile-card p {
+    font-size: 14px;
+    margin-top: 10px; /* Aumentei o espaço entre a imagem e o nome */
+}
+
+.add-profile {
+    font-size: 30px;
+    font-weight: bold;
+    background-color: #333;
+}
+
+.delete-btn {
+    font-size: 12px;
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: auto; /* Garante que o botão fique na parte inferior do cartão */
+}
+
+.delete-btn:hover {
+    background-color: darkred;
+}
+
+.add-profile img {
+    width: 60px; /* Ajuste o tamanho conforme necessário */
+    height: 155px;
+    object-fit: contain;
+  }
+

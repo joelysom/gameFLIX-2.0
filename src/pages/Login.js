@@ -32,8 +32,9 @@ const Login = () => {
         setIsIntroVideoVisible(true); // Exibe o vídeo após o login bem-sucedido
         // Redireciona após o vídeo terminar
         setTimeout(() => {
-          navigate("/EmulatorPlus");
-        }, 7000); // Ajuste o tempo conforme a duração do seu vídeo
+          localStorage.setItem("userId", response.data.userId); // Correção aqui
+          navigate("/select-user");
+        }, 7000);// Ajuste o tempo conforme a duração do seu vídeo
       }
     } catch (err) {
       setError("Usuário ou senha incorretos.");
