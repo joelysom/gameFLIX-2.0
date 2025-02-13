@@ -2,7 +2,8 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import NavbarComponent from './components/Navbar';
-import NavbarAuth from './components/NavbarAuth'; // Novo Navbar para Login e Cadastro
+import NavbarAuth from './components/NavbarAuth';
+import NavbarAuth2 from './components/NavbarAuth2'; // Corrigido aqui
 import Login from './pages/Login';
 import Cadastro from './pages/Cadastro';
 import EmulatorPlus from './pages/EmulatorPlus';
@@ -10,6 +11,7 @@ import EmulatorPage from './pages/EmulatorPage';
 import Creditos from './pages/Creditos';
 import Footer from './components/Footer';
 import SelectUser from './pages/SelectUser';
+import { UserProvider } from './context/UserContext';
 import './App.css';
 
 /**
@@ -20,9 +22,11 @@ import './App.css';
  */
 function App() {
   return (
-    <Router>
-      <Layout />
-    </Router>
+    <UserProvider> {/* Envolvendo toda a aplicação com o contexto */}
+      <Router>
+        <Layout />
+      </Router>
+    </UserProvider>
   );
 }
 
@@ -36,16 +40,15 @@ function Layout() {
   const location = useLocation();
 
   /**
-   * Verifica se a página atual é uma página de autenticação.
-   * Isso ajuda a renderizar um Navbar diferente em páginas como Login e Cadastro.
-   * 
-   * @type {boolean} true se for uma página de autenticação, caso contrário false.
+   * Definindo as condições para cada Navbar.
    */
   const isAuthPage = location.pathname === '/' || location.pathname === '/Cadastro' || location.pathname === '/Creditos';
+  const isSelectUserPage = location.pathname === '/select-user';
+  const isEmulatorPage = location.pathname === '/EmulatorPlus' || location.pathname === '/CustomRom';
 
   return (
     <>
-      {isAuthPage ? <NavbarAuth /> : <NavbarComponent />}
+      {isSelectUserPage ? <NavbarAuth2 /> : isAuthPage ? <NavbarAuth /> : isEmulatorPage ? <NavbarComponent /> : <NavbarComponent />}
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/CustomRom" element={<EmulatorPage />} />

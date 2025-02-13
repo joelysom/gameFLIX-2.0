@@ -13,17 +13,18 @@
 
 .profile-card {
     width: 120px;
-    height: 180px; /* Aumentei a altura para dar mais espaço */
+    height: 180px;
     border-radius: 10px;
     background-color: #222;
     color: white;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-between; /* Garante que o botão fique na parte inferior */
+    justify-content: space-between;
     position: relative;
     transition: 0.3s;
     padding: 10px;
+    cursor: pointer;
 }
 
 .profile-card:hover {
@@ -38,7 +39,7 @@
 
 .profile-card p {
     font-size: 14px;
-    margin-top: 10px; /* Aumentei o espaço entre a imagem e o nome */
+    margin-top: 10px;
 }
 
 .add-profile {
@@ -56,7 +57,7 @@
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s;
-    margin-top: auto; /* Garante que o botão fique na parte inferior do cartão */
+    margin-top: auto;
 }
 
 .delete-btn:hover {
@@ -64,8 +65,70 @@
 }
 
 .add-profile img {
-    width: 60px; /* Ajuste o tamanho conforme necessário */
+    width: 60px;
     height: 155px;
     object-fit: contain;
-  }
+}
 
+/* Modal Overlay */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+/* Modal Card */
+.modal-card {
+    background: #0f0f0f;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    width: 300px;
+}
+
+.modal-card h3 {
+    margin-bottom: 15px;
+    color: #ffffff;
+}
+
+.modal-card input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.modal-card button {
+    padding: 10px;
+    margin: 5px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.modal-card button:first-of-type {
+    background-color: #28a745;
+    color: white;
+}
+
+.modal-card button:first-of-type:hover {
+    background-color: #218838;
+}
+
+.modal-card .cancel-btn {
+    background-color: #dc3545;
+    color: white;
+}
+
+.modal-card .cancel-btn:hover {
+    background-color: #c82333;
+}

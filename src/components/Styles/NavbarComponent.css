@@ -1,4 +1,4 @@
-/* styles.css */
+/* NavBarComponent.css */
 body {
   margin: 0;
   font-family: Arial, sans-serif;
@@ -24,7 +24,8 @@ nav ul {
   list-style: none;
   display: flex;
   gap: 1rem;
-  margin-left: 35rem;
+  margin-left: auto; /* Ajusta para centralizar os links */
+  margin-right: 2rem; /* Espaçamento para a direita */
 }
 
 nav ul li a {
@@ -40,11 +41,33 @@ nav ul li a:hover {
 .logo {
   height: 50px;
   width: auto;
-  margin-left: 5rem;
+  margin-left: 2rem; /* Ajusta o espaçamento do logo */
 }
 
 .logout-button {
+  background: transparent;
   height: 30px;
+  width: 30px;
+  border: none;
+  cursor: pointer;
+  padding: 0; /* Remover padding para que o botão fique apenas com o tamanho da imagem */
+}
+
+.logout-button img {
+  height: 20px; /* Ajuste o tamanho do ícone */
   width: auto;
-  margin-left: 1rem;
+}
+
+
+.profile-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: white;
+}
+
+.profile-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
 }

@@ -1,40 +1,54 @@
-// components/Navbar.js
-
-// Importa o arquivo CSS para a estilização do componente
+import React, { useEffect, useState, useContext } from "react";
+import { useNavigate } from "react-router-dom"; // Importe useNavigate
 import "./Styles/NavbarComponent.css";
-// Importa o React para criar o componente
-import React from "react";
-// Importa a imagem do título que será usada no logo da navbar
 import titleImage from "../assets/title.png";
-// Importa a imagem de logout que será usada no botão de logout
 import logoutImage from "../assets/logout.png";
+import { UserContext } from "../context/UserContext"; 
 
-/**
- * Componente Navbar que renderiza uma barra de navegação com um logo, botão de logout, 
- * e links para outras páginas como DEMO e EMULADOR+.
- * @returns {JSX.Element} Componente Navbar renderizado.
- */
 const Navbar = () => {
+  const { selectedProfile, logout } = useContext(UserContext); 
+  const [storedProfile, setStoredProfile] = useState(null);
+  const navigate = useNavigate(); // Hook para navegação
+
+  useEffect(() => {
+    const storedProfile = localStorage.getItem("selectedProfile");
+    if (storedProfile) {
+      setStoredProfile(JSON.parse(storedProfile));
+    }
+  }, []);
+
+  const currentProfile = selectedProfile || storedProfile;
+
+  // Lógica para logout e redirecionamento para "/"
+  const handleLogout = () => {
+    logout();
+    navigate("/"); // Redireciona para a página inicial
+  };
+
   return (
     <nav className="navbar">
-      {/* Exibe a imagem do título com a classe logo */}
       <img src={titleImage} alt="Title" className="logo" />
-      {/* Lista de links de navegação */}
       <ul className="nav-links">
-        {/* Link de Logout, com a imagem de logout */}
+        {currentProfile && (
+          <li className="profile-info">
+            <img
+              src={currentProfile.profile_picture}
+              alt={currentProfile.profile_name}
+              className="profile-avatar"
+            />
+            <span>{currentProfile.profile_name}</span>
+          </li>
+        )}
         <li>
-          <a href="/">
-            <img src={logoutImage} alt="Logout" className="logout-button" />
-          </a>
+          <button onClick={handleLogout} className="logout-button">
+            <img src={logoutImage} alt="Logout" />
+          </button>
         </li>
-        {/* Link para a página de DEMO */}
         <li><a href="/CustomRom">DEMO</a></li>
-        {/* Link para a página do EMULADOR+ */}
         <li><a href="/EmulatorPlus">EMULADOR+</a></li>
       </ul>
     </nav>
   );
 };
 
-// Exporta o componente Navbar para ser usado em outros arquivos
 export default Navbar;

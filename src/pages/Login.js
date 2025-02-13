@@ -57,7 +57,7 @@ const Login = () => {
    * Redireciona o usuário para a página de cadastro.
    */
   const handleCadastroRedirect = () => {
-    navigate("/cadastro");
+    navigate("/Cadastro");
   };
 
   return (
