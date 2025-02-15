@@ -18,6 +18,14 @@ Este projeto tem como objetivo desenvolver Site Estilo Netflix com emuladores ut
 - **React DOM**: Renderização dos componentes React no DOM.
 - **React Scripts**: Scripts e ferramentas de suporte ao desenvolvimento.
 - **CRA Template**: Template base para inicializar o projeto com Create React App.
+- **Express**: Framework para desenvolvimento de APIs e servidores web.
+- **SQLite3**: Banco de dados leve e eficiente para armazenamento de dados.
+- **Axios**: Cliente HTTP para requisições assíncronas.
+- **Bootstrap e React Bootstrap**: Biblioteca de estilos para um design responsivo.
+- **Bcrypt**: Biblioteca para criptografia de senhas.
+- **CORS**: Middleware para controle de acessos entre domínios diferentes.
+
+
 
 ---
 
