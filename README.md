@@ -29,6 +29,9 @@ Abaixo está a estrutura inicial do projeto:
 GameFlix2.0/
 ├── node_modules/       # Dependências do projeto
 ├── public/             # Arquivos públicos, como index.html
+│   ├── assets              # Arquivos de mídia e Gifs
+│   ├── avatars             # Fotos de Perfils
+│   ├── roms                #Local onde estão as ROMS dos jogos
 ├── src/                    # Código-fonte principal
 │   ├── assets/             # Arquivos de mídia e estáticos
 │   ├── backend/            # Lógica do servidor e banco de dados
@@ -41,7 +44,11 @@ GameFlix2.0/
 │   │   ├── GameCards.js    # Cartões de jogos
 │   │   ├── Navbar.js       # Barra de navegação
 │   │   ├── NavbarAuth.js   # Navbar com autenticação
+│   │   ├── NavbarAuth2.js  # Navbar Para Espera de seleção de Perfil
 │   │   ├── EmulatorPlus.js # Componente adicional do emulador
+│   ├── context/            # Parqa o Navbar carregar a logica dos perfis e contas.
+│   │   ├── UserContext.js  # Para Verificar qual conta e Perfil Estão Sendo Usados em Tempo Real
+│   ├── EmulatorPlus/       # Logica com os Dados dos Emuladores para exibição
 │   ├── pages/              # Páginas principais da aplicação
 │   │   ├── Styles/         # Estilos das páginas
 │   │   ├── Cadastro.js     # Página de cadastro de usuários
